@@ -1,0 +1,46 @@
+#+STARTUP: hidestars showall
+* nio
+  Clojure support for java.nio.
+
+  Extends clojure.java.io's input-stream, output-stream, and copy
+  functions to java.nio.channels.Channel implementations.
+
+  Defines new coercion functions buffer, byte-buffer, char-buffer,
+  double-buffer, float-buffer, int-buffer, long-buffer, short-buffer,
+  channel, readable-channel, and writable-channel.  These functions
+  are implemented for many of the Classes you would expect.
+
+  Also defines a function mmap to memory map a file.
+
+  Additionally, there are three functions buffer-seq, buffer-nth, and
+  buffer-to-array intended to make it a little easier to integrate
+  java.nio classes into Clojure.  Hopefully, these will become
+  obsolete by rolling their functionality into the clojure.core.
+** Examples
+   The recommended way to use nio at the REPL is:
+   : (require '[nio.core :as nio])
+
+   And similarly for your ns imports.
+
+   There are coercion functions for java.nio.Buffer and
+   java.nio.channels.Channel types:
+   : (nio/char-buffer (nio/byte-buffer (into-array Byte/TYPE [0 102 111 111])))
+   : (nio/char-buffer "a string")
+   : (nio/channel (io/file "/home/paul/.bashrc"))
+   : (nio/readable-channel (nio/buffer (into-array Byte/TYPE [1 2 3])))
+
+   clojure.java.io's functions work as you'd expect:
+   : (io/input-stream (nio/channel "/home/paul/.bashrc"))
+   : (io/input-stream (nio/byte-buffer (.getBytes "/home/paul/.bashrc")))
+   : (io/copy (nio/channel "/home/paul/.bashrc") (nio/channel "/home/paul/.bashrc.bak"))
+
+   Memory mapping a file
+   : (mmap "/home/paul/.bashrc")
+
+   You can also call mmap on a File or FileChannel.  The File or
+   FileChannel may be closed without affecting the mapping.
+** License
+   : Copyright (C) 2012 Paul Stadig.
+   :
+   : Distributed under the Eclipse Public License, the same as
+   : Clojure.
