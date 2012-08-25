@@ -1,0 +1,6 @@
+#+STARTUP: hidestars showall
+* CHANGELOG
+** 0.0.1
+   - Initial release.
+** 0.0.2
+   - Removed obsolete ~src/nio/channels.clj~ file.
