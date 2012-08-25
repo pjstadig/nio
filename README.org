@@ -3,7 +3,7 @@
   Clojure support for java.nio.
 
   Extends clojure.java.io's input-stream, output-stream, and copy
-  functions to java.nio.channels.Channel implementations.
+  functions to java.nio classes.
 
   Defines new coercion functions buffer, byte-buffer, char-buffer,
   double-buffer, float-buffer, int-buffer, long-buffer, short-buffer,
