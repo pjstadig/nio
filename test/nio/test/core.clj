@@ -99,6 +99,31 @@
   (assert-buffer Long/TYPE LongBuffer [1 2 3])
   (assert-buffer Short/TYPE ShortBuffer [1 2 3]))
 
+(deftest test-buffer-seq
+  (let [buf (byte-buffer (into-array Byte/TYPE [1 2 3 4 5]))]
+    (.get buf)
+    (.limit buf 3)
+    (is (= [1 2 3] (buffer-seq buf)))
+    (is (= 1 (.position buf)))
+    (is (= 3 (.limit buf)))))
+
+(deftest test-buffer-to-array
+  (let [buf (byte-buffer (into-array Byte/TYPE [1 2 3 4 5]))]
+    (.get buf)
+    (.limit buf 3)
+    (is (= [1 2 3] (seq (buffer-to-array buf))))
+    (is (= 1 (.position buf)))
+    (is (= 3 (.limit buf))))
+  (let [buf (ByteBuffer/allocateDirect 5)]
+    (.put buf (byte 1))
+    (.put buf (byte 2))
+    (.put buf (byte 3))
+    (.flip buf)
+    (.get buf)
+    (is (= [1 2 3] (seq (buffer-to-array buf))))
+    (is (= 1 (.position buf)))
+    (is (= 3 (.limit buf)))))
+
 (deftest test-mmap
   (let [m (mmap "test/foo.txt")]
     (is (= "foo.txt\n" (String. (buffer-to-array m) "UTF-8"))))

@@ -124,10 +124,10 @@
   ([x n] (buffer-nth x n nil))
   ([x n not-found] (proto/buffer-nth x n not-found)))
 (defn buffer-to-array
-  "Returns an array representation of a java.nio.Buffer. In the case
-  of an array backed Buffer, it will return the backing array.
-  Otherwise, creates a new array, and copies each element of the
-  Buffer into the array."
+  "Returns an array representation of a java.nio.Buffer. Creates a new
+  array (even for an array backed Buffer), and copies each element of
+  the Buffer into the array, respecting the Buffer's limit. Does not
+  change the position of the Buffer."
   [x] (proto/buffer-to-array x))
 (defn ^ByteBuffer byte-buffer
   "Coerces its argument into a java.nio.ByteBuffer. If the argument
@@ -268,13 +268,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Byte/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Byte/TYPE (buffer-seq x)))
   proto/IByteBuffer
   (make-byte-buffer [x] x)
   proto/ICharBuffer
@@ -301,13 +295,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Character/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Character/TYPE (buffer-seq x)))
   proto/ICharBuffer
   (make-char-buffer [x] x))
 (extend-type CharSequence
@@ -333,13 +321,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Double/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Double/TYPE (buffer-seq x)))
   proto/IDoubleBuffer
   (make-double-buffer [x] x))
 (extend-type FloatBuffer
@@ -354,13 +336,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Float/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Float/TYPE (buffer-seq x)))
   proto/IFloatBuffer
   (make-float-buffer [x] x))
 (extend-type IntBuffer
@@ -375,13 +351,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Integer/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Integer/TYPE (buffer-seq x)))
   proto/IIntBuffer
   (make-int-buffer [x] x))
 (extend-type LongBuffer
@@ -396,13 +366,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Long/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Long/TYPE (buffer-seq x)))
   proto/ILongBuffer
   (make-long-buffer [x] x))
 (extend-type ShortBuffer
@@ -417,13 +381,7 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x]
-    (if (.hasArray x)
-      (.array x)
-      (let [p (.position x)
-            a (into-array Short/TYPE (buffer-seq x))]
-        (.position x p)
-        a)))
+  (buffer-to-array [x] (into-array Short/TYPE (buffer-seq x)))
   proto/IShortBuffer
   (make-short-buffer [x] x))
 
