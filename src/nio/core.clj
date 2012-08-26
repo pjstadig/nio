@@ -109,10 +109,10 @@
 
 ;; New java.nio coercion functions
 (defn ^Buffer buffer
-  "Coerces its argument into a java.nio.Buffer. If the argument that
-  is already a Buffer this is a no-op. Otherwise, return an
-  appropriate buffer type. Implemented for byte array, char array,
-  double array, float array, int array, long array, and short array"
+  "Coerces its argument into a java.nio.Buffer. If the argument is
+  already a Buffer this is a no-op. Otherwise, return an appropriate
+  buffer type. Implemented for byte array, char array, double array,
+  float array, int array, long array, and short array."
   [x] (proto/make-buffer x))
 (defn ^ISeq buffer-seq
   "Returns a seq that iterates over the elements in a
