@@ -2,7 +2,8 @@
   (:require [clojure.java.io :as jio]
             [clojure.test :refer :all]
             [nio.core :refer :all])
-  (:import (java.io ByteArrayInputStream ByteArrayOutputStream)
+  (:import (java.io ByteArrayInputStream ByteArrayOutputStream
+                    FileNotFoundException)
            (java.nio ByteBuffer CharBuffer DoubleBuffer FloatBuffer
                      IntBuffer LongBuffer ShortBuffer)))
 
@@ -135,3 +136,7 @@
       (is (= "foo" (slurp (jio/file "test/foo2.txt")))))
     (finally
      (.delete (jio/file "test/foo2.txt")))))
+
+(deftest test-readable-channel
+  (is (thrown? FileNotFoundException (readable-channel "bogus"))
+      "opening non-existent file should throw an exception"))

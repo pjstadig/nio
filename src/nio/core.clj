@@ -551,7 +551,13 @@
   proto/NIOFactory
   (assoc default-channels-impl
     :make-channel
-    (fn [^File x] (proto/make-channel (RandomAccessFile. x "rw")))))
+    (fn [^File x] (proto/make-channel (RandomAccessFile. x "rw")))
+    :make-readable-channel
+    (fn [^File x]
+      (proto/make-readable-channel (jio/input-stream x)))
+    :make-writable-channel
+    (fn [^File x]
+      (proto/make-writable-channel (jio/output-stream x)))))
 
 (extend Socket
   proto/NIOFactory
@@ -573,13 +579,13 @@
       (try
         (proto/make-readable-channel (jio/input-stream (URL. x)))
         (catch MalformedURLException e
-          (proto/make-channel (jio/file x)))))
+          (proto/make-readable-channel (jio/file x)))))
     :make-writable-channel
     (fn [^String x]
       (try
         (proto/make-writable-channel (jio/output-stream (URL. x)))
         (catch MalformedURLException e
-          (proto/make-channel (jio/file x)))))))
+          (proto/make-writable-channel (jio/file x)))))))
 
 (extend RandomAccessFile
   proto/NIOFactory
