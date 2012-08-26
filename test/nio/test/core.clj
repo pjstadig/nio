@@ -4,10 +4,12 @@
             [nio.core :refer :all])
   (:import (java.io ByteArrayInputStream ByteArrayOutputStream
                     FileNotFoundException)
-           (java.nio ByteBuffer CharBuffer DoubleBuffer FloatBuffer
-                     IntBuffer LongBuffer ShortBuffer)))
+           (java.nio Buffer ByteBuffer CharBuffer DoubleBuffer
+                     FloatBuffer IntBuffer LongBuffer ShortBuffer)
+           (java.nio.channels ByteChannel ReadableByteChannel
+                              WritableByteChannel)))
 
-(defn make-byte-array []
+(defn make-byte-array ^bytes []
   (into-array Byte/TYPE [0 113 0 117 0 117 0 120]))
 
 (defn assert-buffer [type buffer-type vector & [result-vector]]
@@ -126,11 +128,14 @@
 
 (deftest test-mmap
   (let [m (mmap "test/foo.txt")]
-    (is (= "foo.txt\n" (String. (buffer-to-array m) "UTF-8"))))
+    (is (= "foo.txt\n" (String. ^bytes (buffer-to-array m)
+                                "UTF-8"))))
   (let [m (mmap (jio/file "test/foo.txt"))]
-    (is (= "foo.txt\n" (String. (buffer-to-array m) "UTF-8"))))
+    (is (= "foo.txt\n" (String. ^bytes (buffer-to-array m)
+                                "UTF-8"))))
   (let [m (mmap (channel (jio/file "test/foo.txt")))]
-    (is (= "foo.txt\n" (String. (buffer-to-array m) "UTF-8")))))
+    (is (= "foo.txt\n" (String. ^bytes (buffer-to-array m)
+                                "UTF-8")))))
 
 (deftest test-copy
   (with-open [in (readable-channel (-> "foo"

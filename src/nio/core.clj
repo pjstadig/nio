@@ -99,8 +99,8 @@
  @#'jio/do-copy
  [File File]
  (fn [^File input ^File output opts]
-   (with-open [input (channel input)
-               output (channel output)]
+   (with-open [input ^FileChannel (channel input)
+               output ^FileChannel (channel output)]
      (@#'jio/do-copy input output))))
 
 (prefer-method @#'jio/do-copy
@@ -108,16 +108,18 @@
                [ReadableByteChannel FileChannel])
 
 ;; New java.nio coercion functions
-(defn ^Buffer buffer
+(defn buffer
   "Coerces its argument into a java.nio.Buffer. If the argument is
   already a Buffer this is a no-op. Otherwise, return an appropriate
   buffer type. Implemented for byte array, char array, double array,
   float array, int array, long array, and short array."
+  ^Buffer
   [x] (proto/make-buffer x))
-(defn ^ISeq buffer-seq
+(defn buffer-seq
   "Returns a seq that iterates over the elements in a
   java.nio.Buffer. Does not change the position of the Buffer."
-  [x] (proto/buffer-seq x 0))
+  ^ISeq
+  [^Buffer x] (proto/buffer-seq x 0))
 (defn buffer-nth
   "Returns element n of a java.nio.Buffer. Does not change the
   position of the Buffer."
@@ -129,42 +131,48 @@
   the Buffer into the array, respecting the Buffer's limit. Does not
   change the position of the Buffer."
   [x] (proto/buffer-to-array x))
-(defn ^ByteBuffer byte-buffer
+(defn byte-buffer
   "Coerces its argument into a java.nio.ByteBuffer. If the argument
   that is already a ByteBuffer this is a no-op. Implemented for byte
   array."
-  [x]
-  (proto/make-byte-buffer x))
-(defn ^CharBuffer char-buffer
+  ^ByteBuffer
+  [x] (proto/make-byte-buffer x))
+(defn char-buffer
   "Coerces its argument into a java.nio.CharBuffer. If the argument
   that is already a CharBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, char array, and CharSequence (which includes
   String)."
+  ^CharBuffer
   [x] (proto/make-char-buffer x))
-(defn ^DoubleBuffer double-buffer
+(defn double-buffer
   "Coerces its argument into a java.nio.DoubleBuffer. If the argument
   that is already a DoubleBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and double array."
+  ^DoubleBuffer
   [x] (proto/make-double-buffer x))
-(defn ^FloatBuffer float-buffer
+(defn float-buffer
   "Coerces its argument into a java.nio.FloatBuffer. If the argument
   that is already a FloatBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and float array."
+  ^FloatBuffer
   [x] (proto/make-float-buffer x))
-(defn ^IntBuffer int-buffer
+(defn int-buffer
   "Coerces its argument into a java.nio.IntBuffer. If the argument
   that is already a IntBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and int array."
+  ^IntBuffer
   [x] (proto/make-int-buffer x))
-(defn ^LongBuffer long-buffer
+(defn long-buffer
   "Coerces its argument into a java.nio.LongBuffer. If the argument
   that is already a LongBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and long array."
+  ^LongBuffer
   [x] (proto/make-long-buffer x))
-(defn ^ShortBuffer short-buffer
+(defn short-buffer
   "Coerces its argument into a java.nio.ShortBuffer. If the argument
   that is already a Short this is a no-op. Implemented for byte
   array, ByteBuffer, and short array."
+  ^ShortBuffer
   [x] (proto/make-short-buffer x))
 
 (def byte-array-type (Class/forName "[B"))
@@ -388,11 +396,11 @@
 (extend-protocol proto/IMmap
   String
   (do-mmap [file position size {:keys [mode] :as opts}]
-    (with-open [file-channel (channel file)]
+    (with-open [file-channel ^FileChannel (channel file)]
       (proto/do-mmap file-channel position size opts)))
   File
   (do-mmap [file position size {:keys [mode] :as opts}]
-    (with-open [file-channel (channel file)]
+    (with-open [file-channel ^FileChannel (channel file)]
       (proto/do-mmap file-channel position size opts)))
   FileChannel
   (do-mmap [file-channel position size {:keys [mode] :as opts}]
@@ -407,15 +415,16 @@
             position
             size))))
 
-(defn ^MappedByteBuffer mmap
+(defn mmap
   "Memory maps a file with optional offset and length arguments to map
   only a portion of the file. Accepts keyword :mode option for the
   mapping mode. Valid options are: :read-write, :read-only, :private.
   Implemented for String, File and FileChannel."
+  ^MappedByteBuffer
   [file & [offset length & {:as opts}]]
   (proto/do-mmap file offset length opts))
 
-(defn ^ReadableByteChannel readable-channel
+(defn readable-channel
   "Attempts to coerce its argument into an open
   java.nio.ReadableByteChannel.
 
@@ -425,10 +434,11 @@
 
   Should be used inside with-open to ensure the ReadableByteChannel is
   properly closed."
+  ^ReadableByteChannel
   [x]
   (proto/make-readable-channel x))
 
-(defn ^WritableByteChannel writable-channel
+(defn writable-channel
   "Attempts to coerce its argument into an open
   java.nio.WritableByteChannel.
 
@@ -438,10 +448,11 @@
 
   Should be used inside with-open to ensure the WritableByteChannel is
   properly closed."
+  ^WritableByteChannel
   [x]
   (proto/make-writable-channel x))
 
-(defn ^ByteChannel channel
+(defn channel
   "Attempts to coerce its argument into an open java.nio.ByteChannel.
 
   Default implementations are defined for ByteChannel, File,
@@ -449,6 +460,7 @@
 
   Should be used inside with-open to ensure the WritableByteChannel is
   properly closed."
+  ^ByteChannel
   [x]
   (proto/make-channel x))
 
