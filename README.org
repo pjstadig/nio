@@ -16,6 +16,18 @@
   buffer-to-array intended to make it a little easier to integrate
   java.nio classes into Clojure.  Hopefully, these will become
   obsolete by rolling their functionality into the clojure.core.
+** Dependency information
+   Leiningen dependency information:
+
+   : [nio "0.0.3"]
+
+   Maven dependency information:
+
+   : <dependency>
+   :   <groupId>nio</groupId>
+   :   <artifactId>nio</artifactId>
+   :   <version>0.0.3</version>
+   : </dependency>
 ** Examples
    The recommended way to use nio at the REPL is:
    : (require '[nio.core :as nio])
