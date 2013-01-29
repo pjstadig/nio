@@ -8,3 +8,5 @@
    - Opening non-existent file throws FileNotFoundException
    - buffer-to-array ignores the position of the Buffer
    - docstring and type hint fixes
+** 0.0.4
+   - add missing type hints for make-input-stream and make-output-stream

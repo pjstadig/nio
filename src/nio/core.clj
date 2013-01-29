@@ -29,18 +29,21 @@
 (extend ReadableByteChannel
   jio/IOFactory
   (assoc jio/default-streams-impl
-    :make-input-stream (fn [x opts] (Channels/newInputStream x))))
+    :make-input-stream (fn [^ReadableByteChannel x opts]
+                         (Channels/newInputStream x))))
 
 (extend WritableByteChannel
   jio/IOFactory
   (assoc jio/default-streams-impl
-    :make-output-stream (fn [x opts] (Channels/newOutputStream x))))
+    :make-output-stream (fn [^WritableByteChannel x opts]
+                          (Channels/newOutputStream x))))
 
 (extend ByteChannel
   jio/IOFactory
   (assoc jio/default-streams-impl
-    :make-input-stream (fn [x opts] (Channels/newInputStream x))
-    :make-output-stream (fn [x opts] (Channels/newOutputStream x))))
+    :make-input-stream (fn [^ByteChannel x opts] (Channels/newInputStream x))
+    :make-output-stream (fn [^ByteChannel x opts]
+                          (Channels/newOutputStream x))))
 
 ;;;; some funny stuff going on because the things we want are private
 (.addMethod
