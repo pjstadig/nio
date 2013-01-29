@@ -41,6 +41,11 @@
    : (nio/channel (io/file "/home/paul/.bashrc"))
    : (nio/readable-channel (nio/buffer (into-array Byte/TYPE [1 2 3])))
 
+   There are two convenience functions for getting and setting the byte order of
+   a ByteBuffer:
+   : (byte-order (ByteBuffer/allocate 32))
+   : (set-byte-order! (ByteBuffer/allocate 32) :little-endian)
+
    clojure.java.io's functions work as you'd expect:
    : (io/input-stream (nio/channel "/home/paul/.bashrc"))
    : (io/input-stream (nio/byte-buffer (.getBytes "/home/paul/.bashrc")))
@@ -52,7 +57,7 @@
    You can also call mmap on a File or FileChannel.  The File or
    FileChannel may be closed without affecting the mapping.
 ** License
-   : Copyright (C) 2012 Paul Stadig.
+   : Copyright © 2013 Paul Stadig.
    :
    : Distributed under the Eclipse Public License, the same as
    : Clojure.

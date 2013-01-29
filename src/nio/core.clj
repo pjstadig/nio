@@ -564,3 +564,23 @@
   proto/NIOFactory
   (assoc default-channels-impl
     :make-channel (fn [^RandomAccessFile x] (.getChannel x))))
+
+(def byte-order-to-keyword {ByteOrder/LITTLE_ENDIAN :little-endian
+                            ByteOrder/BIG_ENDIAN :big-endian})
+
+(defn byte-order
+  "Returns the byte order for buf as a keyword, either :big-endian
+  or :little-endian."
+  [^ByteBuffer buf]
+  (byte-order-to-keyword (.order buf)))
+
+(def keyword-to-byte-order {:little-endian ByteOrder/LITTLE_ENDIAN
+                            :big-endian ByteOrder/BIG_ENDIAN})
+
+(defn set-byte-order!
+  "Sets the byte order for buf, order should be either :big-endian
+  or :little-endian."
+  [^ByteBuffer buf order]
+  (.order buf (or (keyword-to-byte-order order)
+                  (throw (IllegalArgumentException.
+                          (str "Invalid order: " (pr-str order)))))))

@@ -170,3 +170,13 @@
 (deftest test-readable-channel
   (is (thrown? FileNotFoundException (readable-channel "bogus"))
       "opening non-existent file should throw an exception"))
+
+(deftest test-byte-order
+  (let [buf (ByteBuffer/allocate 0)]
+    (set-byte-order! buf :big-endian)
+    (is (= :big-endian (byte-order buf)))
+    (set-byte-order! buf :little-endian)
+    (is (= :little-endian (byte-order buf)))
+    (set-byte-order! buf :big-endian)
+    (is (= :big-endian (byte-order buf)))
+    (is (thrown? IllegalArgumentException (set-byte-order! buf :foo)))))
