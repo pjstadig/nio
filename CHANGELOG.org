@@ -10,3 +10,7 @@
    - docstring and type hint fixes
 ** 0.0.4
    - add missing type hints for make-input-stream and make-output-stream
+   - adds byte-order and set-byte-order convenience functions
+** 0.0.5
+   - ensures that channel, readable-channel, and writable-channel on a File all
+     return FileChannel instances.
