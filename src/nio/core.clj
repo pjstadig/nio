@@ -2,8 +2,8 @@
   (:require [clojure.java.io :as jio]
             [nio.protocols :as proto])
   (:import (clojure.lang ISeq MultiFn)
-           (java.io ByteArrayInputStream File InputStream OutputStream
-                    RandomAccessFile)
+           (java.io ByteArrayInputStream File FileInputStream FileOutputStream
+                    InputStream OutputStream RandomAccessFile)
            (java.net DatagramSocket MalformedURLException Socket URL)
            (java.nio Buffer ByteBuffer ByteOrder CharBuffer
                      DoubleBuffer FloatBuffer IntBuffer LongBuffer
@@ -527,10 +527,10 @@
     (fn [^File x] (proto/make-channel (RandomAccessFile. x "rw")))
     :make-readable-channel
     (fn [^File x]
-      (proto/make-readable-channel (jio/input-stream x)))
+      (proto/make-readable-channel (FileInputStream. x)))
     :make-writable-channel
     (fn [^File x]
-      (proto/make-writable-channel (jio/output-stream x)))))
+      (proto/make-writable-channel (FileOutputStream. x)))))
 
 (extend Socket
   proto/NIOFactory

@@ -6,7 +6,7 @@
                     FileNotFoundException)
            (java.nio Buffer ByteBuffer CharBuffer DoubleBuffer
                      FloatBuffer IntBuffer LongBuffer ShortBuffer)
-           (java.nio.channels ByteChannel ReadableByteChannel
+           (java.nio.channels ByteChannel FileChannel ReadableByteChannel
                               WritableByteChannel)))
 
 (defn make-byte-array ^bytes []
@@ -170,6 +170,14 @@
 (deftest test-readable-channel
   (is (thrown? FileNotFoundException (readable-channel "bogus"))
       "opening non-existent file should throw an exception"))
+
+(deftest test-file-channel
+  (try
+    (is (instance? FileChannel (writable-channel "test/test-file-channel.txt")))
+    (is (instance? FileChannel (readable-channel "test/test-file-channel.txt")))
+    (is (instance? FileChannel (channel "test/test-file-channel.txt")))
+    (finally
+     (.delete (jio/file "test/test-file-channel.txt")))))
 
 (deftest test-byte-order
   (let [buf (ByteBuffer/allocate 0)]
