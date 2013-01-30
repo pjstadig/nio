@@ -22,14 +22,14 @@
 ** Dependency information
    Leiningen dependency information:
 
-   : [nio "0.0.4"]
+   : [nio "0.0.5"]
 
    Maven dependency information:
 
    : <dependency>
    :   <groupId>nio</groupId>
    :   <artifactId>nio</artifactId>
-   :   <version>0.0.4</version>
+   :   <version>0.0.5</version>
    : </dependency>
 ** Examples
    The recommended way to use nio at the REPL is:
