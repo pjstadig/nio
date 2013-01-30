@@ -16,6 +16,9 @@
   buffer-to-array intended to make it a little easier to integrate
   java.nio classes into Clojure.  Hopefully, these will become
   obsolete by rolling their functionality into the clojure.core.
+
+  For additional functions to work with ByteBuffers, you can also use
+  [[https://github.com/geoffsalmon/bytebuffer]].
 ** Dependency information
    Leiningen dependency information:
 
