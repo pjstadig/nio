@@ -14,3 +14,7 @@
 ** 0.0.5
    - ensures that channel, readable-channel, and writable-channel on a File all
      return FileChannel instances.
+** 1.0.0
+   - extends java.io/copy to handle two additional cases: 1) reading
+     from a ByteBuffer to a WritableByteChannel, and 2) reading from
+     a ReadableByteChannel to a ByteBuffer.
