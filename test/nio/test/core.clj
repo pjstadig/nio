@@ -165,7 +165,19 @@
       (jio/copy in out)
       (is (= "foo" (slurp (jio/file "test/foo2.txt")))))
     (finally
-      (.delete (jio/file "test/foo2.txt")))))
+      (.delete (jio/file "test/foo2.txt"))))
+  (try
+    (let [in (buffer (-> "foo"
+                         .getBytes))]
+      (with-open [out (channel "test/foo2.txt")]
+        (jio/copy in out)
+        (is (= "foo" (slurp (jio/file "test/foo2.txt"))))))
+    (finally
+      (.delete (jio/file "test/foo2.txt"))))
+  (let [out (buffer (byte-array 8))]
+    (with-open [in (readable-channel "test/foo.txt")]
+      (jio/copy in out)
+      (is (= "foo.txt\n" (String. (.array out) "UTF-8"))))))
 
 (deftest test-readable-channel
   (is (thrown? FileNotFoundException (readable-channel "bogus"))

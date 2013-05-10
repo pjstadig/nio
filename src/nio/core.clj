@@ -49,6 +49,20 @@
 (.addMethod
  ^MultiFn
  @#'jio/do-copy
+ [ByteBuffer WritableByteChannel]
+ (fn [^ByteBuffer input ^WritableByteChannel output opts]
+   (.write output input)))
+
+(.addMethod
+ ^MultiFn
+ @#'jio/do-copy
+ [ReadableByteChannel ByteBuffer]
+ (fn [^ReadableByteChannel input ^ByteBuffer output opts]
+   (.read input output)))
+
+(.addMethod
+ ^MultiFn
+ @#'jio/do-copy
  [FileChannel WritableByteChannel]
  (fn [^FileChannel input ^WritableByteChannel output opts]
    (let [buffer-size (@#'jio/buffer-size opts)]
