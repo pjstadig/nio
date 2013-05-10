@@ -5,5 +5,4 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"
             :distribution :repo
             :comments "same as Clojure"}
-  :dev-dependencies [[org.clojure/clojure "1.4.0"]]
-  :profiles {:dev {:dependencies [[org.clojure/clojure "1.4.0"]]}})
+  :dependencies [[org.clojure/clojure "1.4.0"]])
