@@ -156,7 +156,7 @@
       (jio/copy in out)
       (is (= "foo.txt\n" (slurp (jio/file "test/foo2.txt")))))
     (finally
-     (.delete (jio/file "test/foo2.txt"))))
+      (.delete (jio/file "test/foo2.txt"))))
   (try
     (with-open [in (readable-channel (-> "foo"
                                          .getBytes
@@ -165,7 +165,7 @@
       (jio/copy in out)
       (is (= "foo" (slurp (jio/file "test/foo2.txt")))))
     (finally
-     (.delete (jio/file "test/foo2.txt")))))
+      (.delete (jio/file "test/foo2.txt")))))
 
 (deftest test-readable-channel
   (is (thrown? FileNotFoundException (readable-channel "bogus"))
@@ -177,7 +177,7 @@
     (is (instance? FileChannel (readable-channel "test/test-file-channel.txt")))
     (is (instance? FileChannel (channel "test/test-file-channel.txt")))
     (finally
-     (.delete (jio/file "test/test-file-channel.txt")))))
+      (.delete (jio/file "test/test-file-channel.txt")))))
 
 (deftest test-byte-order
   (let [buf (ByteBuffer/allocate 0)]
