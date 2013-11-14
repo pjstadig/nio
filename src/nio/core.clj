@@ -1,16 +1,14 @@
 (ns nio.core
   (:require [clojure.java.io :as jio]
             [nio.protocols :as proto])
-  (:import (clojure.lang ISeq MultiFn)
+  (:import (clojure.lang MultiFn)
            (java.io ByteArrayInputStream File FileInputStream FileOutputStream
                     InputStream OutputStream RandomAccessFile)
            (java.net DatagramSocket MalformedURLException Socket URL)
-           (java.nio Buffer ByteBuffer ByteOrder CharBuffer
-                     DoubleBuffer FloatBuffer IntBuffer LongBuffer
-                     MappedByteBuffer ShortBuffer)
+           (java.nio ByteBuffer ByteOrder CharBuffer DoubleBuffer FloatBuffer
+                     IntBuffer LongBuffer ShortBuffer)
            (java.nio.channels ByteChannel Channels FileChannel
-                              FileChannel$MapMode Pipe
-                              ReadableByteChannel
+                              FileChannel$MapMode Pipe ReadableByteChannel
                               WritableByteChannel)))
 
 ;; Extend existing clojure.java.io functions to java.nio
@@ -130,13 +128,13 @@
   already a Buffer this is a no-op. Otherwise, return an appropriate
   buffer type. Implemented for byte array, char array, double array,
   float array, int array, long array, and short array."
-  ^Buffer
+  ^java.nio.Buffer
   [x] (proto/make-buffer x))
 (defn buffer-seq
   "Returns a seq that iterates over the elements in a
   java.nio.Buffer. Does not change the position of the Buffer."
-  ^ISeq
-  [^Buffer x] (proto/buffer-seq x 0))
+  ^clojure.lang.ISeq
+  [^java.nio.Buffer x] (proto/buffer-seq x 0))
 (defn buffer-nth
   "Returns element n of a java.nio.Buffer. Does not change the
   position of the Buffer."
@@ -152,44 +150,44 @@
   "Coerces its argument into a java.nio.ByteBuffer. If the argument
   that is already a ByteBuffer this is a no-op. Implemented for byte
   array."
-  ^ByteBuffer
+  ^java.nio.ByteBuffer
   [x] (proto/make-byte-buffer x))
 (defn char-buffer
   "Coerces its argument into a java.nio.CharBuffer. If the argument
   that is already a CharBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, char array, and CharSequence (which includes
   String)."
-  ^CharBuffer
+  ^java.nio.CharBuffer
   [x] (proto/make-char-buffer x))
 (defn double-buffer
   "Coerces its argument into a java.nio.DoubleBuffer. If the argument
   that is already a DoubleBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and double array."
-  ^DoubleBuffer
+  ^java.nio.DoubleBuffer
   [x] (proto/make-double-buffer x))
 (defn float-buffer
   "Coerces its argument into a java.nio.FloatBuffer. If the argument
   that is already a FloatBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and float array."
-  ^FloatBuffer
+  ^java.nio.FloatBuffer
   [x] (proto/make-float-buffer x))
 (defn int-buffer
   "Coerces its argument into a java.nio.IntBuffer. If the argument
   that is already a IntBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and int array."
-  ^IntBuffer
+  ^java.nio.IntBuffer
   [x] (proto/make-int-buffer x))
 (defn long-buffer
   "Coerces its argument into a java.nio.LongBuffer. If the argument
   that is already a LongBuffer this is a no-op. Implemented for byte
   array, ByteBuffer, and long array."
-  ^LongBuffer
+  ^java.nio.LongBuffer
   [x] (proto/make-long-buffer x))
 (defn short-buffer
   "Coerces its argument into a java.nio.ShortBuffer. If the argument
   that is already a Short this is a no-op. Implemented for byte
   array, ByteBuffer, and short array."
-  ^ShortBuffer
+  ^java.nio.ShortBuffer
   [x] (proto/make-short-buffer x))
 
 (def byte-array-type (Class/forName "[B"))
@@ -451,7 +449,7 @@
 
   Should be used inside with-open to ensure the ReadableByteChannel is
   properly closed."
-  ^ReadableByteChannel
+  ^java.nio.channels.ReadableByteChannel
   [x]
   (proto/make-readable-channel x))
 
@@ -465,7 +463,7 @@
 
   Should be used inside with-open to ensure the WritableByteChannel is
   properly closed."
-  ^WritableByteChannel
+  ^java.nio.channels.WritableByteChannel
   [x]
   (proto/make-writable-channel x))
 
@@ -477,7 +475,7 @@
 
   Should be used inside with-open to ensure the WritableByteChannel is
   properly closed."
-  ^ByteChannel
+  ^java.nio.channels.ByteChannel
   [x]
   (proto/make-channel x))
 

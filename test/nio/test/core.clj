@@ -4,10 +4,9 @@
             [nio.core :refer :all])
   (:import (java.io ByteArrayInputStream ByteArrayOutputStream
                     FileNotFoundException)
-           (java.nio Buffer ByteBuffer CharBuffer DoubleBuffer
-                     FloatBuffer IntBuffer LongBuffer ShortBuffer)
-           (java.nio.channels ByteChannel FileChannel ReadableByteChannel
-                              WritableByteChannel)))
+           (java.nio ByteBuffer CharBuffer DoubleBuffer FloatBuffer IntBuffer
+                     LongBuffer ShortBuffer)
+           (java.nio.channels FileChannel)))
 
 (defn make-byte-array ^bytes []
   (into-array Byte/TYPE [0 113 0 117 0 117 0 120]))
