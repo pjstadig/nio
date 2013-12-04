@@ -1,20 +1,24 @@
 #+STARTUP: hidestars showall
 * CHANGELOG
-** 0.0.1
-   - Initial release.
-** 0.0.2
-   - Removed obsolete ~src/nio/channels.clj~ file.
-** 0.0.3
-   - Opening non-existent file throws FileNotFoundException
-   - buffer-to-array ignores the position of the Buffer
-   - docstring and type hint fixes
-** 0.0.4
-   - add missing type hints for make-input-stream and make-output-stream
-   - adds byte-order and set-byte-order convenience functions
-** 0.0.5
-   - ensures that channel, readable-channel, and writable-channel on a File all
-     return FileChannel instances.
+** 1.0.2
+   - Fix bug in the type hints for the return value of the mmap function.
+** 1.0.1
+   - Fix bug in the type hints for the return value of many functions.
 ** 1.0.0
    - extends java.io/copy to handle two additional cases: 1) reading
      from a ByteBuffer to a WritableByteChannel, and 2) reading from
      a ReadableByteChannel to a ByteBuffer.
+** 0.0.5
+   - ensures that channel, readable-channel, and writable-channel on a File all
+     return FileChannel instances.
+** 0.0.4
+   - add missing type hints for make-input-stream and make-output-stream
+   - adds byte-order and set-byte-order convenience functions
+** 0.0.3
+   - Opening non-existent file throws FileNotFoundException
+   - buffer-to-array ignores the position of the Buffer
+   - docstring and type hint fixes
+** 0.0.2
+   - Removed obsolete ~src/nio/channels.clj~ file.
+** 0.0.1
+   - Initial release.
