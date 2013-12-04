@@ -129,6 +129,8 @@
   (let [m (mmap "test/foo.txt")]
     (is (= "foo.txt\n" (String. ^bytes (buffer-to-array m)
                                 "UTF-8"))))
+  (let [m (mmap "test/foo.txt")]
+    (is (= (.get m) 102)))
   (let [m (mmap (jio/file "test/foo.txt"))]
     (is (= "foo.txt\n" (String. ^bytes (buffer-to-array m)
                                 "UTF-8"))))
