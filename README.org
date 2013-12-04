@@ -61,6 +61,6 @@
    FileChannel may be closed without affecting the mapping.
 ** License
    : Copyright © 2013 Paul Stadig.
-   :
+   : 
    : Distributed under the Eclipse Public License, the same as
    : Clojure.
