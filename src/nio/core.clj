@@ -435,7 +435,7 @@
   only a portion of the file. Accepts keyword :mode option for the
   mapping mode. Valid options are: :read-write, :read-only, :private.
   Implemented for String, File and FileChannel."
-  ^MappedByteBuffer
+  ^java.nio.MappedByteBuffer
   [file & [offset length & {:as opts}]]
   (proto/do-mmap file offset length opts))
 
