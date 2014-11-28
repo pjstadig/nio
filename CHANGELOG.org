@@ -3,6 +3,10 @@
 ** 1.0.3
    - Performance improvements to buffer-to-array.
    - Fix bug where buffer-seq always started at 0 instead of (.position buf).
+   - Fix bug in do-copy implementation for File where it was trying to create a
+     read/write channel for both the input and output files.  It now just
+     creates a readable channel for the input and a writable channel for the
+     output.
 ** 1.0.2
    - Fix bug in the type hints for the return value of the mmap function.
 ** 1.0.1

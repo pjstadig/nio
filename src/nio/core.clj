@@ -108,14 +108,15 @@
          (.write output (.flip buf))
          (recur (.read input (.compact buf))))))))
 
-(declare channel)
+(declare readable-channel writable-channel)
+
 (.addMethod
  ^MultiFn
  @#'jio/do-copy
  [File File]
  (fn [^File input ^File output opts]
-   (with-open [input ^FileChannel (channel input)
-               output ^FileChannel (channel output)]
+   (with-open [input ^FileChannel (readable-channel input)
+               output ^FileChannel (writable-channel output)]
      (@#'jio/do-copy input output))))
 
 (prefer-method @#'jio/do-copy
@@ -435,6 +436,8 @@
       array))
   proto/IShortBuffer
   (make-short-buffer [x] x))
+
+(declare channel)
 
 (extend-protocol proto/IMmap
   String
