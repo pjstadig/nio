@@ -1,9 +1,7 @@
+/native/
+/checkouts/
+/target/
 /pom.xml
+/.lein*
+/.nrepl*
 *jar
-/lib
-/classes
-/native
-/.lein-failures
-/checkouts
-/.lein-deps-sum
-/target
