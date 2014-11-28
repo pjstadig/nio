@@ -104,7 +104,7 @@
   (let [buf (byte-buffer (into-array Byte/TYPE [1 2 3 4 5]))]
     (.get buf)
     (.limit buf 3)
-    (is (= [1 2 3] (buffer-seq buf)))
+    (is (= [2 3] (buffer-seq buf)))
     (is (= 1 (.position buf)))
     (is (= 3 (.limit buf)))))
 
@@ -112,7 +112,7 @@
   (let [buf (byte-buffer (into-array Byte/TYPE [1 2 3 4 5]))]
     (.get buf)
     (.limit buf 3)
-    (is (= [1 2 3] (seq (buffer-to-array buf))))
+    (is (= [2 3] (seq (buffer-to-array buf))))
     (is (= 1 (.position buf)))
     (is (= 3 (.limit buf))))
   (let [buf (ByteBuffer/allocateDirect 5)]
@@ -121,7 +121,7 @@
     (.put buf (byte 3))
     (.flip buf)
     (.get buf)
-    (is (= [1 2 3] (seq (buffer-to-array buf))))
+    (is (= [2 3] (seq (buffer-to-array buf))))
     (is (= 1 (.position buf)))
     (is (= 3 (.limit buf)))))
 

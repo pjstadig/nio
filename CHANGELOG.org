@@ -1,5 +1,7 @@
 #+STARTUP: hidestars showall
 * CHANGELOG
+** 1.0.3
+   - Fix bug where buffer-seq always started at 0 instead of (.position buf).
 ** 1.0.2
    - Fix bug in the type hints for the return value of the mmap function.
 ** 1.0.1

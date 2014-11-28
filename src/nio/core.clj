@@ -134,7 +134,7 @@
   "Returns a seq that iterates over the elements in a
   java.nio.Buffer. Does not change the position of the Buffer."
   ^clojure.lang.ISeq
-  [^java.nio.Buffer x] (proto/buffer-seq x 0))
+  [^java.nio.Buffer x] (proto/buffer-seq x (.position x)))
 (defn buffer-nth
   "Returns element n of a java.nio.Buffer. Does not change the
   position of the Buffer."
