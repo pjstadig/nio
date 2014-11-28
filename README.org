@@ -22,14 +22,14 @@
 ** Dependency information
    Leiningen dependency information:
 
-   : [nio "1.0.2"]
+   : [nio "1.0.3"]
 
    Maven dependency information:
 
    : <dependency>
    :   <groupId>nio</groupId>
    :   <artifactId>nio</artifactId>
-   :   <version>1.0.2</version>
+   :   <version>1.0.3</version>
    : </dependency>
 ** Examples
    The recommended way to use nio at the REPL is:
@@ -60,7 +60,7 @@
    You can also call mmap on a File or FileChannel.  The File or
    FileChannel may be closed without affecting the mapping.
 ** License
-   : Copyright © 2013 Paul Stadig.
+   : Copyright © 2012-2014 Paul Stadig.
    : 
    : Distributed under the Eclipse Public License, the same as
    : Clojure.
