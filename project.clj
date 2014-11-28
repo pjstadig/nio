@@ -7,4 +7,5 @@
             :comments "same as Clojure"}
   :dependencies [[org.clojure/clojure "1.4.0"]]
   :profiles {:dev {:dependencies [[criterium "0.4.3"]]}}
-  :global-vars {*warn-on-reflection* true})
+  :global-vars {*warn-on-reflection* true}
+  :deploy-repositories [["releases" :clojars]])
