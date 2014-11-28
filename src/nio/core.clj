@@ -13,15 +13,16 @@
 
 ;;; Extend existing clojure.java.io functions to java.nio
 (declare buffer-to-array)
+
 (extend ByteBuffer
   jio/IOFactory
   (assoc jio/default-streams-impl
     :make-input-stream
     (fn [^ByteBuffer x opts]
       (jio/make-input-stream
-       (ByteArrayInputStream. (buffer-to-array x)
-                              (.position x)
-                              (.remaining x))
+       (if (.hasArray x)
+         (ByteArrayInputStream. (.array x) (.position x) (.remaining x))
+         (ByteArrayInputStream. (buffer-to-array x)))
        opts))))
 
 (extend ReadableByteChannel

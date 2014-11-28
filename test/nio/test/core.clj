@@ -201,3 +201,19 @@
     (set-byte-order! buf :big-endian)
     (is (= :big-endian (byte-order buf)))
     (is (thrown? IllegalArgumentException (set-byte-order! buf :foo)))))
+
+(deftest test-byte-buffer-input-stream
+  (let [original [1 2 3 4]
+        buf (ByteBuffer/allocate (count original))
+        _ (.flip (.put buf ^bytes (into-array Byte/TYPE original)))
+        baos (ByteArrayOutputStream.)]
+    (.get buf)
+    (jio/copy (jio/input-stream (jio/input-stream buf)) baos)
+    (is (= (next original) (seq (.toByteArray baos)))))
+  (let [original [1 2 3 4]
+        buf (ByteBuffer/allocateDirect (count original))
+        _ (.flip (.put buf ^bytes (into-array Byte/TYPE original)))
+        baos (ByteArrayOutputStream.)]
+    (.get buf)
+    (jio/copy (jio/input-stream (jio/input-stream buf)) baos)
+    (is (= (next original) (seq (.toByteArray baos))))))

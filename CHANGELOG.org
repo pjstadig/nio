@@ -7,6 +7,8 @@
      read/write channel for both the input and output files.  It now just
      creates a readable channel for the input and a writable channel for the
      output.
+   - Fix bug in clojure.java.io/input-stream that was using (.position buf) as
+     an offset, when it shouldn't have.
 ** 1.0.2
    - Fix bug in the type hints for the return value of the mmap function.
 ** 1.0.1
