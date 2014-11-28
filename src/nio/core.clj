@@ -11,7 +11,7 @@
                               FileChannel$MapMode Pipe ReadableByteChannel
                               WritableByteChannel)))
 
-;; Extend existing clojure.java.io functions to java.nio
+;;; Extend existing clojure.java.io functions to java.nio
 (declare buffer-to-array)
 (extend ByteBuffer
   jio/IOFactory
@@ -43,7 +43,7 @@
     :make-output-stream (fn [^ByteChannel x opts]
                           (Channels/newOutputStream x))))
 
-;;;; some funny stuff going on because the things we want are private
+;; some funny stuff going on because the things we want to extend are private
 (.addMethod
  ^MultiFn
  @#'jio/do-copy
@@ -122,7 +122,7 @@
                [FileChannel WritableByteChannel]
                [ReadableByteChannel FileChannel])
 
-;; New java.nio coercion functions
+;;; New java.nio coercion functions
 (defn buffer
   "Coerces its argument into a java.nio.Buffer. If the argument is
   already a Buffer this is a no-op. Otherwise, return an appropriate
@@ -291,7 +291,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Byte/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^bytes (make-array Byte/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/IByteBuffer
   (make-byte-buffer [x] x)
   proto/ICharBuffer
@@ -318,7 +322,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Character/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^chars (make-array Character/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/ICharBuffer
   (make-char-buffer [x] x))
 (extend-type CharSequence
@@ -344,7 +352,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Double/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^doubles (make-array Double/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/IDoubleBuffer
   (make-double-buffer [x] x))
 (extend-type FloatBuffer
@@ -359,7 +371,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Float/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^floats (make-array Float/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/IFloatBuffer
   (make-float-buffer [x] x))
 (extend-type IntBuffer
@@ -374,7 +390,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Integer/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^ints (make-array Integer/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/IIntBuffer
   (make-int-buffer [x] x))
 (extend-type LongBuffer
@@ -389,7 +409,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Long/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^longs (make-array Long/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/ILongBuffer
   (make-long-buffer [x] x))
 (extend-type ShortBuffer
@@ -404,7 +428,11 @@
       (.get x (.intValue n))
       (catch IndexOutOfBoundsException e
         not-found)))
-  (buffer-to-array [x] (into-array Short/TYPE (buffer-seq x)))
+  (buffer-to-array [x]
+    (let [x (.duplicate x)
+          array ^shorts (make-array Short/TYPE (.remaining x))]
+      (.get x array)
+      array))
   proto/IShortBuffer
   (make-short-buffer [x] x))
 
