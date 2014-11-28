@@ -1,4 +1,4 @@
-(defproject nio "1.0.2"
+(defproject nio "1.0.3-SNAPSHOT"
   :description "Clojure support for java.nio."
   :url "http://github.com/pjstadig/nio/"
   :license {:name "Eclipse Public License - v 1.0"
