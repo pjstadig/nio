@@ -178,7 +178,7 @@
   (let [out (buffer (byte-array 8))]
     (with-open [in (readable-channel "test/foo.txt")]
       (jio/copy in out)
-      (is (= "foo.txt\n" (String. (.array out) "UTF-8"))))))
+      (is (= "foo.txt\n" (String. ^bytes (.array out) "UTF-8"))))))
 
 (deftest test-readable-channel
   (is (thrown? FileNotFoundException (readable-channel "bogus"))
