@@ -118,7 +118,7 @@
  (fn [^File input ^File output opts]
    (with-open [input ^FileChannel (readable-channel input)
                output ^FileChannel (writable-channel output)]
-     (@#'jio/do-copy input output))))
+     (@#'jio/do-copy input output nil))))
 
 (prefer-method @#'jio/do-copy
                [FileChannel WritableByteChannel]
